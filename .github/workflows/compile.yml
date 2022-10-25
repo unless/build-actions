@@ -16,7 +16,7 @@ on:
     branches:
       - main
     paths:
-      - 'build/Lede_nanopi_r2s_5.4/start-up/start'
+      - 'config'
 
 env:
   Github: https://github.com/${{github.repository}}
