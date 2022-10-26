@@ -8,76 +8,28 @@
 
 
 cat >$NETIP <<-EOF
-uci set network.lan.delegate='0'                                            # 去掉LAN口使用内置的 IPv6 管理
-uci set network.wan.delegate='0' 
-uci delete network.lan
-uci set network.lan=interface
-uci set network.lan.ifname='eth0'
-uci set network.lan.proto='static'
-uci set network.lan.ipaddr='192.168.111.1'
-uci set network.lan.netmask='255.255.255.0'
-uci set network.wan=interface
-uci set network.wan.proto='static'
-#uci set network.wan.ifname='eth0.2' #vlan
-uci set network.wan.ifname='eth1' #usb网卡
-#uci set network.wan.username='' #拨号
-#uci set network.wan.password=''
-#uci set network.wan.keepalive='10 5'
-uci set network.wan.ipaddr='192.168.110.2'
-uci set network.wan.netmask='255.255.255.0'
-uci set network.wan.gateway='192.168.110.1'
-uci set network.wan.dns='192.168.110.1'
-uci set network.wan.ipv6='0'
-uci commit network
-uci set upnpd.config.enabled='1'
-uci commit upnpd
-uci set cpufreq.cpufreq.governor='schedutil'
-uci set cpufreq.cpufreq.upthreshold='50'
-uci set cpufreq.cpufreq.factor='10'
-uci set cpufreq.cpufreq.minifreq='600000'
-uci set cpufreq.cpufreq.maxfreq='1200000'
-uci commit cpufreq
-uci add_list uhttpd.main.listen_http='0.0.0.0:6380'
-uci add_list uhttpd.main.listen_http='[::]:6380'
-uci set uhttpd.main.rfc1918_filter='0'
-uci commit uhttpd
-uci set hd-idle.@hd-idle[0].disk='sda1'
-uci set hd-idle.@hd-idle[0].enabled='1'
-uci commit hd-idle
-uci set minidlna.config.enabled='0'
-uci set minidlna.config.media_dir='/mnt/1t/TV'
-uci set minidlna.config.interface='eth0'
-uci commit minidlna
-uci add firewall rule
-uci rename firewall.@rule[-1]="6380"
-uci set firewall.@rule[-1].name="6380"
-uci set firewall.@rule[-1].target="ACCEPT"
-uci set firewall.@rule[-1].src="wan"
-uci set firewall.@rule[-1].proto="tcp"
-uci set firewall.@rule[-1].dest_port="6380"
-uci add firewall rule
-uci rename firewall.@rule[-1]="6377"
-uci set firewall.@rule[-1].name="6377"
-uci set firewall.@rule[-1].target="ACCEPT"
-uci set firewall.@rule[-1].src="wan"
-uci set firewall.@rule[-1].proto="tcp"
-uci set firewall.@rule[-1].dest_port="6377"
-uci commit firewall
-#uci set dhcp.lan.ignore='1'                                                 # 关闭DHCP功能
-uci del dhcp.lan.ra
-uci del dhcp.lan.dhcpv6
-uci del dhcp.lan.ra_management
-uci commit dhcp                                                             # 跟‘关闭DHCP功能’联动,同时启用或者删除跟注释
-uci set system.@system[0].hostname='BKY'                            # 修改主机名称为OpenWrt-123
+uci set network.lan.ipaddr='192.168.2.2'                      # IPv4 地址(openwrt后台地址)
+uci set network.lan.netmask='255.255.255.0'                   # IPv4 子网掩码
+#uci set network.lan.gateway='192.168.2.1'                    # 旁路由设置 IPv4 网关（去掉uci前面的#生效）
+#uci set network.lan.broadcast='192.168.2.255'                # 旁路由设置 IPv4 广播（去掉uci前面的#生效）
+#uci set network.lan.dns='223.5.5.5 114.114.114.114'          # 旁路由设置 DNS(多个DNS要用空格分开)（去掉uci前面的#生效）
+uci set network.lan.delegate='0'                              # 去掉LAN口使用内置的 IPv6 管理(若用IPV6请把'0'改'1')
+uci set dhcp.@dnsmasq[0].filter_aaaa='1'                      # 禁止解析 IPv6 DNS记录(若用IPV6请把'1'改'0')
+
+#uci set dhcp.lan.ignore='1'                                  # 旁路由关闭DHCP功能（去掉uci前面的#生效）
+#uci delete network.lan.type                                  # 旁路由去掉桥接模式（去掉uci前面的#生效）
+uci set system.@system[0].hostname='OpenWrt-123'              # 修改主机名称为OpenWrt-123
+#uci set ttyd.@ttyd[0].command='/bin/login -f root'           # 设置ttyd免帐号登录（去掉uci前面的#生效）
+
+# 如果有用IPV6的话,可以使用以下命令创建IPV6客户端(LAN口)（去掉全部代码uci前面#号生效）
+#uci set network.ipv6=interface
+#uci set network.ipv6.proto='dhcpv6'
+#uci set network.ipv6.ifname='@lan'
+#uci set network.ipv6.reqaddress='try'
+#uci set network.ipv6.reqprefix='auto'
+#uci set firewall.@zone[0].network='lan ipv6'
 EOF
 
-sed -i 's/$(DTS_DIR)\/$(DEVICE_DTS)/bkyrockchip/g' target/linux/rockchip/image/Makefile
-sed -i 's/"$(STAGING_DIR_IMAGE)"\/$(UBOOT_DEVICE_NAME)-idbloader.img/idbloader2.img/g' target/linux/rockchip/image/Makefile
-sed -i 's/"$(STAGING_DIR_IMAGE)"\/$(UBOOT_DEVICE_NAME)-u-boot.itb/uboot2.img/g' target/linux/rockchip/image/Makefile
-sed -i 's/"$(STAGING_DIR_IMAGE)"\/$(UBOOT_DEVICE_NAME)-idbloader.bin/idbloader.img/g' target/linux/rockchip/image/Makefile
-sed -i 's/"$(STAGING_DIR_IMAGE)"\/$(UBOOT_DEVICE_NAME)-uboot.img/uboot.img/g' target/linux/rockchip/image/Makefile
-sed -i 's/"$(STAGING_DIR_IMAGE)"\/$(UBOOT_DEVICE_NAME)-trust.bin/trust.img/g' target/linux/rockchip/image/Makefile
-sed -i '/IMAGE_KERNEL/a\$(CP) opt.zip $@.boot/opt.zip' target/linux/rockchip/image/Makefile
 
 # 把bootstrap替换成argon为源码必选主题（可自行修改您要的,主题名称必须对,比如下面代码的[argon],源码内必须有该主题,要不然编译失败）
 sed -i "s/bootstrap/argon/ig" feeds/luci/collections/luci/Makefile
@@ -121,16 +73,16 @@ EOF
 
 
 # 修改插件名字
-#sed -i 's/"aMule设置"/"电驴下载"/g' `egrep "aMule设置" -rl ./`
-#sed -i 's/"网络存储"/"NAS"/g' `egrep "网络存储" -rl ./`
-#sed -i 's/"Turbo ACC 网络加速"/"网络加速"/g' `egrep "Turbo ACC 网络加速" -rl ./`
-#sed -i 's/"实时流量监测"/"流量"/g' `egrep "实时流量监测" -rl ./`
-#sed -i 's/"KMS 服务器"/"KMS激活"/g' `egrep "KMS 服务器" -rl ./`
-#sed -i 's/"TTYD 终端"/"命令窗"/g' `egrep "TTYD 终端" -rl ./`
-#sed -i 's/"USB 打印服务器"/"打印服务"/g' `egrep "USB 打印服务器" -rl ./`
-#sed -i 's/"Web 管理"/"Web管理"/g' `egrep "Web 管理" -rl ./`
-#sed -i 's/"管理权"/"改密码"/g' `egrep "管理权" -rl ./`
-#sed -i 's/"带宽监控"/"监控"/g' `egrep "带宽监控" -rl ./`
+sed -i 's/"aMule设置"/"电驴下载"/g' `egrep "aMule设置" -rl ./`
+sed -i 's/"网络存储"/"NAS"/g' `egrep "网络存储" -rl ./`
+sed -i 's/"Turbo ACC 网络加速"/"网络加速"/g' `egrep "Turbo ACC 网络加速" -rl ./`
+sed -i 's/"实时流量监测"/"流量"/g' `egrep "实时流量监测" -rl ./`
+sed -i 's/"KMS 服务器"/"KMS激活"/g' `egrep "KMS 服务器" -rl ./`
+sed -i 's/"TTYD 终端"/"命令窗"/g' `egrep "TTYD 终端" -rl ./`
+sed -i 's/"USB 打印服务器"/"打印服务"/g' `egrep "USB 打印服务器" -rl ./`
+sed -i 's/"Web 管理"/"Web管理"/g' `egrep "Web 管理" -rl ./`
+sed -i 's/"管理权"/"改密码"/g' `egrep "管理权" -rl ./`
+sed -i 's/"带宽监控"/"监控"/g' `egrep "带宽监控" -rl ./`
 
 
 # 整理固件包时候,删除您不想要的固件或者文件,让它不需要上传到Actions空间（根据编译机型变化,自行调整需要删除的固件名称）
