@@ -62,7 +62,7 @@ export OpenClash_branch='master'
 # 可选内核 （5.4） （5.10） （5.15） （5.19） （6.0）
 
 #cat >"$AMLOGIC_SH_PATH" <<-EOF
-#amlogic_model=rk3328
+#amlogic_model=s905d
 #amlogic_kernel=5.15.79 -a true
 #rootfs_size=960
 #EOF
