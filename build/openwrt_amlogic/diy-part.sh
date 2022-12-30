@@ -61,11 +61,11 @@ export OpenClash_branch='master'
 # s912-m8s s905d s905d-ki s905x s905w s905 s905l3a s905x2-km3 s912
 # 可选内核 （5.4） （5.10） （5.15） （5.19） （6.0）
 
-#cat >"$AMLOGIC_SH_PATH" <<-EOF
-#amlogic_model=s905d
-#amlogic_kernel=5.15.79 -a true
-#rootfs_size=960
-#EOF
+cat >"$AMLOGIC_SH_PATH" <<-EOF
+amlogic_model=s905x3_s905x2_s905x_s905w_s905d_s922x_s912
+amlogic_kernel=5.15.25_5.10.100
+rootfs_size=960
+EOF
 
 
 # 修改插件名字
