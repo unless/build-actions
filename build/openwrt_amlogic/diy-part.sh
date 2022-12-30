@@ -63,7 +63,8 @@ export OpenClash_branch='master'
 
 cat >"$AMLOGIC_SH_PATH" <<-EOF
 amlogic_model=s905x3_rk3328
-amlogic_kernel=5.15.25_5.10.100
+amlogic_kernel=5.10.161_6.1.1
+auto_kernel=true
 rootfs_size=960
 EOF
 
