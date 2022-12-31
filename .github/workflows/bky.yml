@@ -48,11 +48,11 @@ jobs:
     - name: Upload firmware to WeTransfer
       if: ${{ env.PACKAGED_STATUS }} == 'success' && !cancelled()
       run: |
-        cd ${{ env.PACKAGED_OUTPUTPATH }}
+        cd ${PACKAGED_OUTPUTPATH}
         ls
         pwd
         curl -fsSL git.io/file-transfer | sh
-        ./transfer cow --block 2621440 -s -p 64 --no-progress ${{ env.PACKAGED_OUTPUTPATH }} 2>&1 | tee cowtransfer.log
+        ./transfer cow --block 2621440 -s -p 64 --no-progress ${PACKAGED_OUTPUTPATH} 2>&1 | tee cowtransfer.log
         echo "::warning file=cowtransfer.com::$(cat cowtransfer.log | grep https)"
         echo "::set-output name=url::$(cat cowtransfer.log | grep https | cut -f3 -d" ")"
         
