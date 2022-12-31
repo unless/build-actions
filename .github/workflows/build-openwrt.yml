@@ -78,9 +78,10 @@ jobs:
         source ${GITHUB_WORKSPACE}/build/${{matrix.target}}/common.sh && Diy_repo_url
         source ${GITHUB_WORKSPACE}/build/${{matrix.target}}/common.sh && Diy_settings
         
-        
-        if: steps.compile.outcome == 'success' && ${{matrix.target}} == 'openwrt_amlogic'
-        run: |
+     
+    - name: 定时启动编译时清理Actions空间和删除releases数值设置22
+      if: ${{matrix.target}} == 'openwrt_amlogic1'
+      run: |
         echo "hahahahahahha"      
         
     - name: 定时启动编译时清理Actions空间和删除releases数值设置
