@@ -132,6 +132,7 @@ jobs:
         source ${BUILD_PATH}/common.sh && Package_amlogic
 
     - name: Package OpenWrt Firmware
+      if: steps.compile.outcome == 'success' && env.AUTOMATIC_RK == 'true'
       uses: ophub/flippy-openwrt-actions@main
       env:
         OPENWRT_ARMVIRT: bin/targets/armvirt/64/*.tar.gz
