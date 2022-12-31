@@ -10,7 +10,6 @@ on:
 env:
   REPO_TOKEN: ${{ secrets.REPO_TOKEN }}
   TZ: Asia/Shanghai
-  UPLOAD_COWTRANSFER: ture
 
 jobs:
   build:
@@ -19,11 +18,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        include:
-          - flippy_name: 80+o
-            release_name: HK1-jcnf-mini-80+o.img
-          - flippy_name: 80+
-            release_name: HK1-jcnf-mini-80+.img
+
+
 
     env:
       FLIPPY_NAME: ${{ matrix.flippy_name }}   
@@ -51,7 +47,7 @@ jobs:
         KERNEL_VERSION_NAME: 6.1.1
 
     - name: Upload firmware to WeTransfer
-      if: env.PACKAGED_STATUS == 'success' && env.UPLOAD_COWTRANSFER == 'true' && !cancelled()
+      if: ${{ env.PACKAGED_STATUS }} == 'success' && !cancelled()
       run: |
         curl -fsSL git.io/file-transfer | sh
         ./transfer cow --block 2621440 -s -p 64 --no-progress ${{ env.PACKAGED_OUTPUTPATH }} 2>&1 | tee cowtransfer.log
