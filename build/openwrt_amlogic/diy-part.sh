@@ -8,17 +8,67 @@
 
 
 cat >$NETIP <<-EOF
-uci set network.lan.ipaddr='192.168.2.2'                      # IPv4 地址(openwrt后台地址)
-uci set network.lan.netmask='255.255.255.0'                   # IPv4 子网掩码
-#uci set network.lan.gateway='192.168.2.1'                    # 旁路由设置 IPv4 网关（去掉uci前面的#生效）
-#uci set network.lan.broadcast='192.168.2.255'                # 旁路由设置 IPv4 广播（去掉uci前面的#生效）
-#uci set network.lan.dns='223.5.5.5 114.114.114.114'          # 旁路由设置 DNS(多个DNS要用空格分开)（去掉uci前面的#生效）
+uci set network.lan.delegate='0'                                            # 去掉LAN口使用内置的 IPv6 管理
+uci set network.wan.delegate='0' 
+uci delete network.lan
+uci set network.lan=interface
+uci set network.lan.ifname='eth0'
+uci set network.lan.proto='static'
+uci set network.lan.ipaddr='192.168.111.1'
+uci set network.lan.netmask='255.255.255.0'
+uci set network.wan=interface
+uci set network.wan.proto='static'
+uci set network.wan.ifname='eth1' #usb网卡
+uci set network.wan.ipaddr='192.168.110.2'
+uci set network.wan.netmask='255.255.255.0'
+uci set network.wan.gateway='192.168.110.1'
+uci set network.wan.dns='192.168.110.1'
+uci set network.wan.ipv6='0'
+uci commit network
+uci set upnpd.config.enabled='1'
+uci commit upnpd
+uci set cpufreq.cpufreq.governor='schedutil'
+uci set cpufreq.cpufreq.upthreshold='50'
+uci set cpufreq.cpufreq.factor='10'
+uci set cpufreq.cpufreq.minifreq='600000'
+uci set cpufreq.cpufreq.maxfreq='1200000'
+uci commit cpufreq
+uci add_list uhttpd.main.listen_http='0.0.0.0:6380'
+uci add_list uhttpd.main.listen_http='[::]:6380'
+uci set uhttpd.main.rfc1918_filter='0'
+uci commit uhttpd
+uci set hd-idle.@hd-idle[0].disk='sda1'
+uci set hd-idle.@hd-idle[0].enabled='1'
+uci commit hd-idle
+uci set minidlna.config.enabled='0'
+uci set minidlna.config.media_dir='/mnt/1t/TV'
+uci set minidlna.config.interface='eth0'
+uci commit minidlna
+uci add firewall rule
+uci rename firewall.@rule[-1]="6380"
+uci set firewall.@rule[-1].name="6380"
+uci set firewall.@rule[-1].target="ACCEPT"
+uci set firewall.@rule[-1].src="wan"
+uci set firewall.@rule[-1].proto="tcp"
+uci set firewall.@rule[-1].dest_port="6380"
+uci add firewall rule
+uci rename firewall.@rule[-1]="6377"
+uci set firewall.@rule[-1].name="6377"
+uci set firewall.@rule[-1].target="ACCEPT"
+uci set firewall.@rule[-1].src="wan"
+uci set firewall.@rule[-1].proto="tcp"
+uci set firewall.@rule[-1].dest_port="6377"
+uci commit firewall
+#uci set dhcp.lan.ignore='1'                                                 # 关闭DHCP功能
+uci del dhcp.lan.ra
+uci del dhcp.lan.dhcpv6
+uci del dhcp.lan.ra_management
+uci commit dhcp                                                             # 跟‘关闭DHCP功能’联动,同时启用或者删除跟注释
+uci set system.@system[0].hostname='BKY'                            # 修改主机名称为OpenWrt-123
+
 uci set network.lan.delegate='0'                              # 去掉LAN口使用内置的 IPv6 管理(若用IPV6请把'0'改'1')
 uci set dhcp.@dnsmasq[0].filter_aaaa='1'                      # 禁止解析 IPv6 DNS记录(若用IPV6请把'1'改'0')
 
-#uci set dhcp.lan.ignore='1'                                  # 旁路由关闭DHCP功能（去掉uci前面的#生效）
-#uci delete network.lan.type                                  # 旁路由去掉桥接模式（去掉uci前面的#生效）
-uci set system.@system[0].hostname='OpenWrt-123'              # 修改主机名称为OpenWrt-123
 #uci set ttyd.@ttyd[0].command='/bin/login -f root'           # 设置ttyd免帐号登录（去掉uci前面的#生效）
 
 # 如果有用IPV6的话,可以使用以下命令创建IPV6客户端(LAN口)（去掉全部代码uci前面#号生效）
@@ -54,10 +104,6 @@ sed -i "/exit 0/i\sed -i '/coremark/d' /etc/crontabs/root" "${FIN_PATH}"
 # 更改使用OpenClash的分支代码，把下面的master改成dev就使用dev分支，改master就是用master分支，改错的话就默认使用master分支
 export OpenClash_branch='master'
 
-echo "ls"
-ls
-
-sed -i "s/make -d/make/ig" /home/runner/work/build-actions/build-actions/openwrt/build/openwrt_amlogic/common.sh
 
 # 设置打包固件的机型，内核组合（可用内核是时时变化的,过老的内核就删除的，所以要选择什么内核请看说明）
 # 当前可用机型
