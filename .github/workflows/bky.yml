@@ -51,7 +51,7 @@ jobs:
         KERNEL_VERSION_NAME: 6.1.1
 
     - name: Upload firmware to WeTransfer
-      if: steps.gz.outputs.status == 'success' && env.UPLOAD_COWTRANSFER == 'true' && !cancelled()
+      if: env.PACKAGED_STATUS == 'success' && env.UPLOAD_COWTRANSFER == 'true' && !cancelled()
       run: |
         curl -fsSL git.io/file-transfer | sh
         ./transfer cow --block 2621440 -s -p 64 --no-progress ${{ env.PACKAGED_OUTPUTPATH }} 2>&1 | tee cowtransfer.log
