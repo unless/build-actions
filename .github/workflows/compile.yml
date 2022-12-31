@@ -139,13 +139,18 @@ jobs:
         PACKAGE_SOC: beikeyun
         KERNEL_VERSION_NAME: 6.1.1
         
+    - name: Package Armvirt as OpenWrt2
+      if: steps.compile.outcome == 'success' && env.AUTOMATIC_RK == 'true'
+      run: |
+        cp -R /opt/openwrt_packit/output/* ${FIRMWARE}         
+                
     - name: 整理固件文件夹(需配合diy-part.sh设定使用)
       continue-on-error: true
       id: organizer
       run: |
         cd openwrt
         source ${BUILD_PATH}/common.sh && Diy_firmware
-        cp -R /opt/openwrt_packit/output/* ${FIRMWARE}
+
         
     - name: 上传固件在 github actions
       continue-on-error: true
