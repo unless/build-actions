@@ -135,10 +135,10 @@ jobs:
       if: steps.compile.outcome == 'success' && env.AUTOMATIC_RK == 'true'
       uses: ophub/flippy-openwrt-actions@main
       env:
-        OPENWRT_ARMVIRT: bin/targets/armvirt/64/*.tar.gz
+        OPENWRT_ARMVIRT: /home/runner/work/build-actions/build-actions/openwrt/bin/targets/armvirt/64/*.tar.gz
         PACKAGE_SOC: rk3328
         KERNEL_VERSION_NAME: 6.1.1
-        SELECT_OUTPUTPATH: bin/targets/armvirt/64/
+        SELECT_OUTPUTPATH: /home/runner/work/build-actions/build-actions/openwrt/bin/targets/armvirt/64/
 
     - name: 整理固件文件夹(需配合diy-part.sh设定使用)
       continue-on-error: true
