@@ -38,7 +38,7 @@ jobs:
         
         echo "version=$version"  >> $GITHUB_ENV
         echo "DATE=$(date "+%Y-%m-%d %H:%M:%S")"  >> $GITHUB_ENV
-        version=https://github.com/unless/build-actions/releases/download/$version/openwrt-armvirt-64-default-rootfs.tar.gz
+
         
     - name: Package OpenWrt Firmware
       uses: ophub/flippy-openwrt-actions@main
