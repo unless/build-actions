@@ -131,6 +131,14 @@ jobs:
         cd ${GITHUB_WORKSPACE}
         source ${BUILD_PATH}/common.sh && Package_amlogic
 
+    - name: Package OpenWrt Firmware
+      uses: ophub/flippy-openwrt-actions@main
+      env:
+        OPENWRT_ARMVIRT: bin/targets/armvirt/64/*.tar.gz
+        PACKAGE_SOC: rk3328
+        KERNEL_VERSION_NAME: 6.1.1
+        SELECT_OUTPUTPATH: bin/targets/armvirt/64/
+
     - name: 整理固件文件夹(需配合diy-part.sh设定使用)
       continue-on-error: true
       id: organizer
