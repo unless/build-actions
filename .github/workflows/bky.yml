@@ -5,7 +5,7 @@ on:
       again-fork:
         description: 'build'
         required: false
-        default: 'fork'
+        default: 'build'
 
 env:
   REPO_TOKEN: ${{ secrets.REPO_TOKEN }}
