@@ -37,6 +37,8 @@ jobs:
         version=$(curl -s "https://api.github.com/repos/unless/build-actions/releases/latest" | awk -F '"' '/tag_name/{print $4}')
         version1=$(curl -s "https://api.github.com/repos/unless/build-actions/releases/latest" | grep name |awk -F '"' '/-Lede-armvirt-64-default-rootfs.tar.gz/{print $4}')
         wget https://github.com/unless/build-actions/releases/download/$version/$version1
+        mv $version1 openwrt-armvirt-64-default-rootfs.tar.gz
+        ls
         echo "version=$version"  >> $GITHUB_ENV
         echo "version1=$version1"  >> $GITHUB_ENV
         echo "DATE=$(date "+%Y-%m-%d %H:%M:%S")"  >> $GITHUB_ENV
