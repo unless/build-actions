@@ -64,6 +64,7 @@ jobs:
         # [Lede_nanopi_r2s_5.4,Lede_ra619,Lede_source,Lienol_source,Mortal_source,Tianling_source,openwrt_amlogic]
 
     
+    
     steps:
     - name: 准备结束
       uses: actions/checkout@v3
@@ -76,6 +77,11 @@ jobs:
         chmod -R +x ${GITHUB_WORKSPACE}/build
         source ${GITHUB_WORKSPACE}/build/${{matrix.target}}/common.sh && Diy_repo_url
         source ${GITHUB_WORKSPACE}/build/${{matrix.target}}/common.sh && Diy_settings
+        
+        
+        if: steps.compile.outcome == 'success' && ${{matrix.target}} == 'openwrt_amlogic'
+        run: |
+        echo "hahahahahahha"      
         
     - name: 定时启动编译时清理Actions空间和删除releases数值设置
       run: |
