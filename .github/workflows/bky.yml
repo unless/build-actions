@@ -33,6 +33,7 @@ jobs:
         wget https://github.com/unless/build-actions/releases/download/$version/$version1
         mv $version1 openwrt-armvirt-64-default-rootfs.tar.gz
         ls
+        pwd
         echo "version=$version"  >> $GITHUB_ENV
         echo "version1=$version1"  >> $GITHUB_ENV
         echo "DATE=$(date "+%Y-%m-%d %H:%M:%S")"  >> $GITHUB_ENV
@@ -47,6 +48,9 @@ jobs:
     - name: Upload firmware to WeTransfer
       if: ${{ env.PACKAGED_STATUS }} == 'success' && !cancelled()
       run: |
+        cd ${{ env.PACKAGED_OUTPUTPATH }}
+        ls
+        pwd
         curl -fsSL git.io/file-transfer | sh
         ./transfer cow --block 2621440 -s -p 64 --no-progress ${{ env.PACKAGED_OUTPUTPATH }} 2>&1 | tee cowtransfer.log
         echo "::warning file=cowtransfer.com::$(cat cowtransfer.log | grep https)"
