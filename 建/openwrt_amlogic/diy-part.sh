@@ -66,7 +66,7 @@ sed -i "s/make -d/make/ig" /home/runner/work/build-actions/build-actions/openwrt
 # 可选内核 （5.4） （5.10） （5.15） （5.19） （6.0）
 
 cat >"$AMLOGIC_SH_PATH" <<-EOF
-amlogic_model=s905x3
+amlogic_model=rk3328
 amlogic_kernel=6.1.1
 auto_kernel=true
 rootfs_size=960
