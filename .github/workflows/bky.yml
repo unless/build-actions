@@ -46,7 +46,7 @@ jobs:
         KERNEL_VERSION_NAME: 6.1.1
 
     - name: Upload firmware to WeTransfer
-      if: ${{ env.PACKAGED_STATUS }} == 'success' && !cancelled()
+      if: ${env.PACKAGED_STATUS} == 'success' && !cancelled()
       run: |
         cd ${PACKAGED_OUTPUTPATH}
         ls
