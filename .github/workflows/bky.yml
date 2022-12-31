@@ -48,6 +48,7 @@ jobs:
     - name: Upload firmware to WeTransfer
       if: ${{ env.PACKAGED_STATUS }} == 'success' && !cancelled()
       run: |
+        env
         echo ${{ env.PACKAGED_OUTPUTPATH }} 
         ls
         pwd
