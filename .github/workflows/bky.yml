@@ -37,6 +37,8 @@ jobs:
         echo "version=$version"  >> $GITHUB_ENV
         echo "version1=$version1"  >> $GITHUB_ENV
         echo "DATE=$(date "+%Y-%m-%d %H:%M:%S")"  >> $GITHUB_ENV
+        mkdir opp
+
 
     - name: Package OpenWrt Firmware
       uses: ophub/flippy-openwrt-actions@main
@@ -57,6 +59,11 @@ jobs:
         echo "::warning file=cowtransfer.com::$(cat cowtransfer.log | grep https)"
         echo "::set-output name=url::$(cat cowtransfer.log | grep https | cut -f3 -d" ")"
         
+    - name: SSH远程连接（制作.config配置文件）
+      uses: danshui-git/debugger-action@main
+      env:
+        TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
   
   over:
     needs: [build]
