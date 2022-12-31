@@ -43,7 +43,7 @@ jobs:
     - name: Package OpenWrt Firmware
       uses: ophub/flippy-openwrt-actions@main
       env:
-        OPENWRT_ARMVIRT: ${{version}}
+        OPENWRT_ARMVIRT: ${version}
         PACKAGE_SOC: rk3328
         KERNEL_VERSION_NAME: 6.1.1
 
