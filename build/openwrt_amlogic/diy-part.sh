@@ -104,7 +104,17 @@ sed -i "/exit 0/i\sed -i '/coremark/d' /etc/crontabs/root" "${FIN_PATH}"
 # 更改使用OpenClash的分支代码，把下面的master改成dev就使用dev分支，改master就是用master分支，改错的话就默认使用master分支
 export OpenClash_branch='master'
 
+# 1.设置OpenWrt 文件的下载仓库
+sed -i "s|https.*/OpenWrt|https://github.com/unless/build-actions|g" openwrt/feeds/danshui/luci-app-amlogic/root/etc/config/amlogic
 
+# 2.设置 Releases 里 Tags 的关键字
+sed -i "s|ARMv8|Lede-armvirt|g" openwrt/feeds/danshui/luci-app-amlogic/root/etc/config/amlogic
+
+# 3.设置 Releases 里 OpenWrt 文件的后缀
+# sed -i "s|.img.gz|.OPENWRT_SUFFIX|g" openwrt/feeds/danshui/luci-app-amlogic/root/etc/config/amlogic
+
+# 4.设置 OpenWrt 内核的下载路径
+sed -i "s|opt/kernel|https://github.com/ophub/kernel/tree/main/pub/stable|g" openwrt/feeds/danshui/luci-app-amlogic/root/etc/config/amlogic
 
 # 设置打包固件的机型，内核组合（可用内核是时时变化的,过老的内核就删除的，所以要选择什么内核请看说明）
 # 当前可用机型
