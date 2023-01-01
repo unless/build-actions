@@ -59,7 +59,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        target: [Lede_nanopi_r2s_5.4]
+        target: [openwrt_amlogic]
 
         # [Lede_nanopi_r2s_5.4,openwrt_amlogic,Lede_ra619,Lede_source,Lienol_source,Mortal_source,Tianling_source,openwrt_amlogic]
 
