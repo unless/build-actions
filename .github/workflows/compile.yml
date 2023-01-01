@@ -172,7 +172,7 @@ jobs:
       uses: ncipollo/release-action@main
       with:
         name: ${{ env.SOURCE }}-${{ env.TARGET_PROFILE }}
-        tag: ${{ env.date }}
+        tag: ${{ env.SOURCE }}-${{ env.TARGET_PROFILE }}-${{ env.date }}
         token: ${{ secrets.REPO_TOKEN }}
         allowUpdates: true
         bodyFile: "update_log.txt"
