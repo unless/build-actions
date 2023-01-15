@@ -14,25 +14,11 @@ uci delete network.lan
 uci set network.lan=interface
 uci set network.lan.ifname='eth0'
 uci set network.lan.proto='static'
-uci set network.lan.ipaddr='192.168.111.1'
+uci set network.lan.ipaddr='192.168.111.3'
 uci set network.lan.netmask='255.255.255.0'
-uci set network.wan=interface
-uci set network.wan.proto='static'
-uci set network.wan.ifname='eth1' #usb网卡
-uci set network.wan.ipaddr='192.168.110.2'
-uci set network.wan.netmask='255.255.255.0'
-uci set network.wan.gateway='192.168.110.1'
-uci set network.wan.dns='192.168.110.1'
-uci set network.wan.ipv6='0'
 uci commit network
 uci set upnpd.config.enabled='1'
 uci commit upnpd
-uci set cpufreq.cpufreq.governor='schedutil'
-uci set cpufreq.cpufreq.upthreshold='50'
-uci set cpufreq.cpufreq.factor='10'
-uci set cpufreq.cpufreq.minifreq='600000'
-uci set cpufreq.cpufreq.maxfreq='1200000'
-uci commit cpufreq
 uci add_list uhttpd.main.listen_http='0.0.0.0:6380'
 uci add_list uhttpd.main.listen_http='[::]:6380'
 uci set uhttpd.main.rfc1918_filter='0'
@@ -69,7 +55,7 @@ uci set system.@system[0].hostname='BKY'                            # 修改主�
 uci set network.lan.delegate='0'                              # 去掉LAN口使用内置的 IPv6 管理(若用IPV6请把'0'改'1')
 uci set dhcp.@dnsmasq[0].filter_aaaa='1'                      # 禁止解析 IPv6 DNS记录(若用IPV6请把'1'改'0')
 
-#uci set ttyd.@ttyd[0].command='/bin/login -f root'           # 设置ttyd免帐号登录（去掉uci前面的#生效）
+uci set ttyd.@ttyd[0].command='/bin/login -f root'           # 设置ttyd免帐号登录（去掉uci前面的#生效）
 
 # 如果有用IPV6的话,可以使用以下命令创建IPV6客户端(LAN口)（去掉全部代码uci前面#号生效）
 #uci set network.ipv6=interface
