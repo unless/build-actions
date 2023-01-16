@@ -51,12 +51,9 @@ uci del dhcp.lan.dhcpv6
 uci del dhcp.lan.ra_management
 uci commit dhcp                                                             # 跟‘关闭DHCP功能’联动,同时启用或者删除跟注释
 uci set system.@system[0].hostname='BKY'                            # 修改主机名称为OpenWrt-123
-
 uci set network.lan.delegate='0'                              # 去掉LAN口使用内置的 IPv6 管理(若用IPV6请把'0'改'1')
 uci set dhcp.@dnsmasq[0].filter_aaaa='1'                      # 禁止解析 IPv6 DNS记录(若用IPV6请把'1'改'0')
-
 uci set ttyd.@ttyd[0].command='/bin/login -f root'           # 设置ttyd免帐号登录（去掉uci前面的#生效）
-
 # 如果有用IPV6的话,可以使用以下命令创建IPV6客户端(LAN口)（去掉全部代码uci前面#号生效）
 #uci set network.ipv6=interface
 #uci set network.ipv6.proto='dhcpv6'
@@ -66,9 +63,6 @@ uci set ttyd.@ttyd[0].command='/bin/login -f root'           # 设置ttyd免帐�
 #uci set firewall.@zone[0].network='lan ipv6'
 EOF
 
-
-#sed -i "s/PKG_NAME:=gowebdav/PKG_NAME:=gowebdav3/ig" feeds/packages/net/gowebdav/Makefile
-#sed -i "s/gowebdav/gowebdav3/ig" feeds/luci/applications/luci-app-webdav/Makefile
 
 # 把bootstrap替换成argon为源码必选主题（可自行修改您要的,主题名称必须对,比如下面代码的[argon],源码内必须有该主题,要不然编译失败）
 sed -i "s/bootstrap/argon/ig" feeds/luci/collections/luci/Makefile
