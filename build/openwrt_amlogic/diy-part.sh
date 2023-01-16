@@ -18,8 +18,8 @@ uci set network.lan.ipaddr='192.168.111.3'
 uci set network.lan.netmask='255.255.255.0'
 uci set network.lan.dns='192.168.111.1'
 uci set network.lan.gateway='192.168.111.1'
-uci add_list  dhcp.lan.dhcp_option='3,192.168.111.1'
-uci add_list  dhcp.lan.dhcp_option='6,192.168.111.1'
+uci add_list dhcp.lan.dhcp_option='3,192.168.111.1'
+uci add_list dhcp.lan.dhcp_option='6,192.168.111.1'
 uci commit network
 uci set upnpd.config.enabled='1'
 uci commit upnpd
