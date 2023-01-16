@@ -73,6 +73,10 @@ uci set ttyd.@ttyd[0].command='/bin/login -f root'           # 设置ttyd免帐�
 #uci set network.ipv6.reqaddress='try'
 #uci set network.ipv6.reqprefix='auto'
 #uci set firewall.@zone[0].network='lan ipv6'
+uci set amlogic.config.amlogic_firmware_repo='https://github.com/unless/build-actions'
+uci set amlogic.config.amlogic_firmware_tag='armvirt'
+uci set amlogic.config.amlogic_shared_fstype='btrfs'
+uci commit amlogic
 EOF
 
 
