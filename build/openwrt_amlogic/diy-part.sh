@@ -55,8 +55,8 @@ uci del dhcp.lan.dhcpv6
 uci del dhcp.lan.ra_management
 uci set dhcp.fdns=tag
 uci set dhcp.fdns.force='1'
-uci add_list dhcp.fdns.dhcp_option='3,192.168.111.1'
-uci add_list dhcp.fdns.dhcp_option='6,192.168.111.1'
+uci add_list dhcp.fdns.dhcp_option='3,192.168.111.3'
+uci add_list dhcp.fdns.dhcp_option='6,192.168.111.3'
 uci set dhcp.zdns=tag
 uci set dhcp.zdns.force='1'
 uci add_list dhcp.zdns.dhcp_option='3,192.168.111.1'
