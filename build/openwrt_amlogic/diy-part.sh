@@ -67,8 +67,8 @@ uci set ttyd.@ttyd[0].command='/bin/login -f root'           # 设置ttyd免帐�
 EOF
 
 
-
-rm -r packages/net/gowebdav
+sed -i "s/PKG_NAME:=gowebdav/PKG_NAME:=gowebdav3/ig" feeds/packages/net/gowebdav/Makefile
+sed -i "s/gowebdav/gowebdav3/ig" feeds/luci/applications/luci-app-webdav/Makefile
 
 # 把bootstrap替换成argon为源码必选主题（可自行修改您要的,主题名称必须对,比如下面代码的[argon],源码内必须有该主题,要不然编译失败）
 sed -i "s/bootstrap/argon/ig" feeds/luci/collections/luci/Makefile
