@@ -171,7 +171,7 @@ jobs:
       if: steps.compile.outcome == 'success' && env.UPLOAD_RELEASE == 'true' && env.REPO_TOKEN
       uses: ncipollo/release-action@main
       with:
-        name: ${{ env.SOURCE }}-${{ env.TARGET_PROFILE }}
+        name: ${{ env.SOURCE }}-${{ env.TARGET_PROFILE }}-${{ env.date }}
         tag: ${{ env.SOURCE }}-${{ env.TARGET_PROFILE }}-${{ env.date }}
         token: ${{ secrets.REPO_TOKEN }}
         allowUpdates: true
