@@ -11,6 +11,7 @@ cat >$NETIP <<-EOF
 uci set network.lan.delegate='0'                                            # 去掉LAN口使用内置的 IPv6 管理
 uci set network.wan.delegate='0' 
 uci delete network.lan
+uci delete network.wan
 uci set network.lan=interface
 uci set network.lan.ifname='eth0'
 uci set network.lan.proto='static'
@@ -20,6 +21,18 @@ uci set network.lan.netmask='255.255.255.0'
 #uci set network.lan.gateway='192.168.111.1'
 #uci add_list dhcp.lan.dhcp_option='3,192.168.111.1'
 #uci add_list dhcp.lan.dhcp_option='6,192.168.111.1'
+uci set network.wan=interface
+uci set network.wan.proto='static'
+uci set network.wan.ifname='eth0.1237' #vlan
+#uci set network.wan.ifname='eth1' #usb网卡
+#uci set network.wan.username='' #拨号
+#uci set network.wan.password=''
+#uci set network.wan.keepalive='10 5'
+uci set network.wan.ipaddr='192.168.110.3'
+uci set network.wan.netmask='255.255.255.0'
+uci set network.wan.gateway='192.168.110.1'
+uci set network.wan.dns='192.168.110.1'
+uci set network.wan.ipv6='0'
 uci commit network
 uci set upnpd.config.enabled='1'
 uci commit upnpd
@@ -35,12 +48,12 @@ uci set minidlna.config.media_dir='/mnt/1t/TV'
 uci set minidlna.config.interface='eth0'
 uci commit minidlna
 uci add firewall rule
-uci rename firewall.@rule[-1]="6380"
-uci set firewall.@rule[-1].name="6380"
+uci rename firewall.@rule[-1]="6376"
+uci set firewall.@rule[-1].name="6376"
 uci set firewall.@rule[-1].target="ACCEPT"
 uci set firewall.@rule[-1].src="wan"
 uci set firewall.@rule[-1].proto="tcp"
-uci set firewall.@rule[-1].dest_port="6380"
+uci set firewall.@rule[-1].dest_port="6376"
 uci add firewall rule
 uci rename firewall.@rule[-1]="6377"
 uci set firewall.@rule[-1].name="6377"
@@ -48,6 +61,27 @@ uci set firewall.@rule[-1].target="ACCEPT"
 uci set firewall.@rule[-1].src="wan"
 uci set firewall.@rule[-1].proto="tcp"
 uci set firewall.@rule[-1].dest_port="6377"
+uci add firewall rule
+uci rename firewall.@rule[-1]="6378"
+uci set firewall.@rule[-1].name="6378"
+uci set firewall.@rule[-1].target="ACCEPT"
+uci set firewall.@rule[-1].src="wan"
+uci set firewall.@rule[-1].proto="tcp"
+uci set firewall.@rule[-1].dest_port="6378"
+uci add firewall rule
+uci rename firewall.@rule[-1]="6379"
+uci set firewall.@rule[-1].name="6379"
+uci set firewall.@rule[-1].target="ACCEPT"
+uci set firewall.@rule[-1].src="wan"
+uci set firewall.@rule[-1].proto="tcp"
+uci set firewall.@rule[-1].dest_port="6379"
+uci add firewall rule
+uci rename firewall.@rule[-1]="6380"
+uci set firewall.@rule[-1].name="6380"
+uci set firewall.@rule[-1].target="ACCEPT"
+uci set firewall.@rule[-1].src="wan"
+uci set firewall.@rule[-1].proto="tcp"
+uci set firewall.@rule[-1].dest_port="6380"
 uci commit firewall
 #uci set dhcp.lan.ignore='1'                                                 # 关闭DHCP功能
 uci del dhcp.lan.ra
