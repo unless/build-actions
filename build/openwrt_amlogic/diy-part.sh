@@ -8,26 +8,18 @@
 
 
 cat >$NETIP <<-EOF
-uci set network.lan.delegate='0'                                            # 去掉LAN口使用内置的 IPv6 管理
-uci set network.wan.delegate='0' 
 uci delete network.lan
 uci delete network.wan
+uci set network.lan.delegate='0'                                            # 去掉LAN口使用内置的 IPv6 管理
+uci set network.wan.delegate='0' 
 uci set network.lan=interface
 uci set network.lan.ifname='eth0'
 uci set network.lan.proto='static'
 uci set network.lan.ipaddr='192.168.111.1'
 uci set network.lan.netmask='255.255.255.0'
-#uci set network.lan.dns='192.168.111.1'
-#uci set network.lan.gateway='192.168.111.1'
-#uci add_list dhcp.lan.dhcp_option='3,192.168.111.1'
-#uci add_list dhcp.lan.dhcp_option='6,192.168.111.1'
 uci set network.wan=interface
 uci set network.wan.proto='static'
 uci set network.wan.ifname='eth0.1237' #vlan
-#uci set network.wan.ifname='eth1' #usb网卡
-#uci set network.wan.username='' #拨号
-#uci set network.wan.password=''
-#uci set network.wan.keepalive='10 5'
 uci set network.wan.ipaddr='192.168.110.3'
 uci set network.wan.netmask='255.255.255.0'
 uci set network.wan.gateway='192.168.110.1'
@@ -87,14 +79,6 @@ uci commit firewall
 uci del dhcp.lan.ra
 uci del dhcp.lan.dhcpv6
 uci del dhcp.lan.ra_management
-#uci set dhcp.fdns=tag
-#uci set dhcp.fdns.force='1'
-#uci add_list dhcp.fdns.dhcp_option='3,192.168.111.3'
-#uci add_list dhcp.fdns.dhcp_option='6,192.168.111.3'
-#uci set dhcp.zdns=tag
-#uci set dhcp.zdns.force='1'
-#uci add_list dhcp.zdns.dhcp_option='3,192.168.111.1'
-#uci add_list dhcp.zdns.dhcp_option='6,192.168.111.1'
 uci commit dhcp                                                             # 跟‘关闭DHCP功能’联动,同时启用或者删除跟注释
 uci set system.@system[0].hostname='BKY'                            # 修改主机名称为OpenWrt-123
 uci set network.lan.delegate='0'                              # 去掉LAN口使用内置的 IPv6 管理(若用IPV6请把'0'改'1')
