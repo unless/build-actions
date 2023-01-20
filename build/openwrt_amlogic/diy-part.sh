@@ -78,13 +78,6 @@ uci set firewall.@rule[-1].src="wan"
 uci set firewall.@rule[-1].proto="tcp"
 uci set firewall.@rule[-1].dest_port="6378"
 uci add firewall rule
-uci rename firewall.@rule[-1]="6379"
-uci set firewall.@rule[-1].name="6379"
-uci set firewall.@rule[-1].target="ACCEPT"
-uci set firewall.@rule[-1].src="wan"
-uci set firewall.@rule[-1].proto="tcp"
-uci set firewall.@rule[-1].dest_port="6379"
-uci add firewall rule
 uci rename firewall.@rule[-1]="6380"
 uci set firewall.@rule[-1].name="6380"
 uci set firewall.@rule[-1].target="ACCEPT"
