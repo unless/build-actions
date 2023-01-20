@@ -27,6 +27,11 @@ uci set network.wan.delegate='0'    # 去掉WAN口使用内置的 IPv6 管理(�
 uci commit network
 uci set upnpd.config.enabled='1'
 uci commit upnpd
+uci del_list openvpn.myvpn.push='route 192.168.1.0 255.255.255.0'
+uci del_list openvpn.myvpn.push='dhcp-option DNS 192.168.1.1'
+uci add_list openvpn.myvpn.push='route 192.168.111.0 255.255.255.0'
+uci add_list openvpn.myvpn.push='route dhcp-option DNS 192.168.111.1'
+uci commit openvpn
 uci add_list uhttpd.main.listen_http='0.0.0.0:6380'
 uci add_list uhttpd.main.listen_http='[::]:6380'
 uci set uhttpd.main.rfc1918_filter='0'
