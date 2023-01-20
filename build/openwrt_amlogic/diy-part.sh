@@ -35,10 +35,6 @@ uci add_list openvpn.myvpn.push='route 192.168.111.0 255.255.255.0'
 uci add_list openvpn.myvpn.push='route dhcp-option DNS 192.168.111.1'
 uci commit openvpn
 uci add luci command
-uci set luci.@command[-1].name='webdav'
-uci set luci.@command[-1].public='1'
-uci set luci.@command[-1].command='sh /mnt/mmcblk0p4/webdav.sh'
-uci add luci command
 uci set luci.@command[-1].name='mk'
 uci set luci.@command[-1].public='1'
 uci set luci.@command[-1].command='sh /mnt/sda1/mk.sh'
@@ -46,6 +42,10 @@ uci add luci command
 uci set luci.@command[-1].name='mount'
 uci set luci.@command[-1].public='1'
 uci set luci.@command[-1].command='sh /mnt/mmcblk0p4/mount.sh'
+uci add luci command
+uci set luci.@command[-1].name='webdav'
+uci set luci.@command[-1].public='1'
+uci set luci.@command[-1].command='sh /mnt/mmcblk0p4/webdav.sh'
 uci commit luci
 uci add_list uhttpd.main.listen_http='0.0.0.0:6380'
 uci add_list uhttpd.main.listen_http='[::]:6380'
@@ -55,8 +55,6 @@ uci set hd-idle.@hd-idle[0].disk='sda1'
 uci set hd-idle.@hd-idle[0].enabled='1'
 uci commit hd-idle
 uci set minidlna.config.enabled='0'
-uci set minidlna.config.media_dir='/mnt/1t/TV'
-uci set minidlna.config.interface='eth0'
 uci commit minidlna
 uci add firewall rule
 uci rename firewall.@rule[-1]="6377"
