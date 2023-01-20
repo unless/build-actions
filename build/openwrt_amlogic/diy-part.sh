@@ -28,10 +28,12 @@ uci commit network
 uci set upnpd.config.enabled='1'
 uci commit upnpd
 uci set openvpn.myvpn.port='6379'
+uci set openvpn.myvpn.enabled='1'
 uci del_list openvpn.myvpn.push='route 192.168.1.0 255.255.255.0'
 uci del_list openvpn.myvpn.push='dhcp-option DNS 192.168.1.1'
 uci add_list openvpn.myvpn.push='route 192.168.111.0 255.255.255.0'
 uci add_list openvpn.myvpn.push='route dhcp-option DNS 192.168.111.1'
+
 uci commit openvpn
 uci add luci command
 uci set luci.@command[-1].name='webdav'
