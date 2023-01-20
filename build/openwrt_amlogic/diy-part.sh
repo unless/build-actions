@@ -8,14 +8,27 @@
 
 
 cat >$NETIP <<-EOF
+
 uci delete network.lan
-uci delete network.wan
-uci set network.lan.delegate='0'                                            # 去掉LAN口使用内置的 IPv6 管理
 uci set network.lan=interface
 uci set network.lan.ifname='eth0'
 uci set network.lan.proto='static'
 uci set network.lan.ipaddr='192.168.111.1'
 uci set network.lan.netmask='255.255.255.0'
+uci set network.wan=interface
+uci set network.wan.proto='static'
+uci set network.wan.ifname='eth0.2' #vlan
+#uci set network.wan.ifname='eth1' #usb网卡
+#uci set network.wan.username='' #拨号
+#uci set network.wan.password=''
+#uci set network.wan.keepalive='10 5'
+uci set network.wan.ipaddr='192.168.110.3'
+uci set network.wan.netmask='255.255.255.0'
+uci set network.wan.gateway='192.168.110.1'
+uci set network.wan.dns='192.168.110.1'
+uci set network.wan.ipv6='0'
+uci set network.lan.delegate='0'                                      # 去掉LAN口使用内置的 IPv6 管理(若用IPV6请把'0'改'1')
+uci set network.wan.delegate='0' 
 uci commit network
 uci set upnpd.config.enabled='1'
 uci commit upnpd
@@ -69,11 +82,10 @@ uci commit firewall
 #uci set dhcp.lan.ignore='1'                                                 # 关闭DHCP功能
 uci del dhcp.lan.ra
 uci del dhcp.lan.dhcpv6
-uci del dhcp.lan.ra_management
+uci del dhcp.lan.ra_management 
+uci set dhcp.@dnsmasq[0].filter_aaaa='1'    # 禁止解析 IPv6 DNS记录(若用IPV6请把'1'改'0')
 uci commit dhcp                                                             # 跟‘关闭DHCP功能’联动,同时启用或者删除跟注释
 uci set system.@system[0].hostname='BKY'                            # 修改主机名称为OpenWrt-123
-uci set network.lan.delegate='0'                              # 去掉LAN口使用内置的 IPv6 管理(若用IPV6请把'0'改'1')
-uci set dhcp.@dnsmasq[0].filter_aaaa='1'                      # 禁止解析 IPv6 DNS记录(若用IPV6请把'1'改'0')
 uci set ttyd.@ttyd[0].command='/bin/login -f root'           # 设置ttyd免帐号登录（去掉uci前面的#生效）
 # 如果有用IPV6的话,可以使用以下命令创建IPV6客户端(LAN口)（去掉全部代码uci前面#号生效）
 #uci set network.ipv6=interface
