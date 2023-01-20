@@ -27,6 +27,7 @@ uci set network.wan.delegate='0'    # 去掉WAN口使用内置的 IPv6 管理(�
 uci commit network
 uci set upnpd.config.enabled='1'
 uci commit upnpd
+uci set openvpn.myvpn.port='6379'
 uci del_list openvpn.myvpn.push='route 192.168.1.0 255.255.255.0'
 uci del_list openvpn.myvpn.push='dhcp-option DNS 192.168.1.1'
 uci add_list openvpn.myvpn.push='route 192.168.111.0 255.255.255.0'
@@ -56,13 +57,6 @@ uci set minidlna.config.enabled='0'
 uci set minidlna.config.media_dir='/mnt/1t/TV'
 uci set minidlna.config.interface='eth0'
 uci commit minidlna
-uci add firewall rule
-uci rename firewall.@rule[-1]="6376"
-uci set firewall.@rule[-1].name="6376"
-uci set firewall.@rule[-1].target="ACCEPT"
-uci set firewall.@rule[-1].src="wan"
-uci set firewall.@rule[-1].proto="tcp"
-uci set firewall.@rule[-1].dest_port="6376"
 uci add firewall rule
 uci rename firewall.@rule[-1]="6377"
 uci set firewall.@rule[-1].name="6377"
