@@ -11,20 +11,11 @@ cat >$NETIP <<-EOF
 uci delete network.lan
 uci delete network.wan
 uci set network.lan.delegate='0'                                            # 去掉LAN口使用内置的 IPv6 管理
-uci set network.wan.delegate='0' 
 uci set network.lan=interface
 uci set network.lan.ifname='eth0'
 uci set network.lan.proto='static'
 uci set network.lan.ipaddr='192.168.111.1'
 uci set network.lan.netmask='255.255.255.0'
-uci set network.wan=interface
-uci set network.wan.proto='static'
-uci set network.wan.ifname='eth0.1237' #vlan
-uci set network.wan.ipaddr='192.168.110.3'
-uci set network.wan.netmask='255.255.255.0'
-uci set network.wan.gateway='192.168.110.1'
-uci set network.wan.dns='192.168.110.1'
-uci set network.wan.ipv6='0'
 uci commit network
 uci set upnpd.config.enabled='1'
 uci commit upnpd
