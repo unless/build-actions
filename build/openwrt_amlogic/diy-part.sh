@@ -8,7 +8,6 @@
 
 
 cat >$NETIP <<-EOF
-
 uci delete network.lan
 uci set network.lan=interface
 uci set network.lan.ifname='eth0'
