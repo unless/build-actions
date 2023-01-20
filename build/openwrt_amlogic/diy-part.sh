@@ -34,6 +34,9 @@ uci del_list openvpn.myvpn.push='dhcp-option DNS 192.168.1.1'
 uci add_list openvpn.myvpn.push='route 192.168.111.0 255.255.255.0'
 uci add_list openvpn.myvpn.push='route dhcp-option DNS 192.168.111.1'
 uci commit openvpn
+uci delete luci.@command[-1]
+uci delete luci.@command[-1]
+uci delete luci.@command[-1]
 uci add luci command
 uci set luci.@command[-1].name='mk'
 uci set luci.@command[-1].public='1'
