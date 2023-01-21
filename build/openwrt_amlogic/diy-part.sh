@@ -17,6 +17,8 @@ uci set network.lan.netmask='255.255.255.0'
 uci set network.lan.delegate='0'      # 去掉LAN口使用内置的 IPv6 管理(若用IPV6请把'0'改'1')
 uci set network.wan=interface
 uci set network.wan.proto='static'
+uci set network.wan._orig_ifname 'eth0.110'
+uci set network.wan._orig_bridge 'false'
 uci set network.wan.ifname='eth0.110'
 uci set network.wan.ipaddr='192.168.110.3'
 uci set network.wan.netmask='255.255.255.0'
