@@ -27,20 +27,13 @@ uci set network.wan.delegate='0'    # 去掉WAN口使用内置的 IPv6 管理(�
 uci commit network
 uci set upnpd.config.enabled='1'
 uci commit upnpd
-uci set openvpn.myvpn.port='6379'
-uci set openvpn.myvpn.enabled='1'
-uci del_list openvpn.myvpn.push='route 192.168.1.0 255.255.255.0'
-uci del_list openvpn.myvpn.push='dhcp-option DNS 192.168.1.1'
-uci add_list openvpn.myvpn.push='route 192.168.111.0 255.255.255.0'
-uci add_list openvpn.myvpn.push='route dhcp-option DNS 192.168.111.1'
-uci commit openvpn
 uci delete luci.@command[-1]
 uci delete luci.@command[-1]
 uci delete luci.@command[-1]
 uci add luci command
 uci set luci.@command[-1].name='mk'
 uci set luci.@command[-1].public='1'
-uci set luci.@command[-1].command='sh /mnt/sda1/mk.sh'
+uci set luci.@command[-1].command='sh /mnt/mmcblk0p4/mk.sh'
 uci add luci command
 uci set luci.@command[-1].name='mount'
 uci set luci.@command[-1].public='1'
