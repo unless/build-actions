@@ -9,71 +9,24 @@
 
 cat >$NETIP <<-EOF
 uci delete network.lan
-uci set network.lan=interface
-uci set network.lan.ifname='eth0'
-uci set network.lan.proto='static'
-uci set network.lan.ipaddr='192.168.111.1'
-uci set network.lan.netmask='255.255.255.0'
-uci set network.lan.delegate='0'      # 去掉LAN口使用内置的 IPv6 管理(若用IPV6请把'0'改'1')
-uci set network.wan.delegate='0'    # 去掉WAN口使用内置的 IPv6 管理(若用IPV6请把'0'改'1')
-uci commit network
-uci set upnpd.config.enabled='1'
-uci commit upnpd
-uci delete luci.@command[-1]
-uci delete luci.@command[-1]
-uci delete luci.@command[-1]
+uci set network.lan.ipaddr='192.168.111.1'                    # IPv4 地址(openwrt后台地址)
+uci set network.lan.netmask='255.255.255.0'                   # IPv4 子网掩码
+uci set network.lan.delegate='0'                              # 去掉LAN口使用内置的 IPv6 管理(若用IPV6请把'0'改'1')
+uci set dhcp.@dnsmasq[0].filter_aaaa='1'                      # 禁止解析 IPv6 DNS记录(若用IPV6请把'1'改'0')
+uci del dhcp.lan.ra
+uci del dhcp.lan.dhcpv6
+uci del dhcp.lan.ra_management 
+
+#uci set dhcp.lan.ignore='1'                                  # 旁路由关闭DHCP功能（去掉uci前面的#生效）
+#uci delete network.lan.type                                  # 旁路由去掉桥接模式（去掉uci前面的#生效）
+uci set system.@system[0].hostname='BKY'                      # 修改主机名称为OpenWrt-123
+uci set ttyd.@ttyd[0].command='/bin/login -f root'            # 设置ttyd免帐号登录（去掉uci前面的#生效）
+
 uci add luci command
 uci set luci.@command[-1].name='mk'
 uci set luci.@command[-1].public='1'
 uci set luci.@command[-1].command='sh /mnt/mmcblk0p4/mk.sh'
-uci add luci command
-uci set luci.@command[-1].name='mount'
-uci set luci.@command[-1].public='1'
-uci set luci.@command[-1].command='sh /mnt/mmcblk0p4/mount.sh'
-uci add luci command
-uci set luci.@command[-1].name='webdav'
-uci set luci.@command[-1].public='1'
-uci set luci.@command[-1].command='sh /mnt/mmcblk0p4/webdav.sh'
-uci commit luci
-uci add_list uhttpd.main.listen_http='0.0.0.0:6380'
-uci add_list uhttpd.main.listen_http='[::]:6380'
-uci set uhttpd.main.rfc1918_filter='0'
-uci commit uhttpd
-uci set hd-idle.@hd-idle[0].disk='sda1'
-uci set hd-idle.@hd-idle[0].enabled='1'
-uci commit hd-idle
-uci set minidlna.config.enabled='0'
-uci commit minidlna
-uci add firewall rule
-uci rename firewall.@rule[-1]="6377"
-uci set firewall.@rule[-1].name="6377"
-uci set firewall.@rule[-1].target="ACCEPT"
-uci set firewall.@rule[-1].src="wan"
-uci set firewall.@rule[-1].proto="tcp"
-uci set firewall.@rule[-1].dest_port="6377"
-uci add firewall rule
-uci rename firewall.@rule[-1]="6378"
-uci set firewall.@rule[-1].name="6378"
-uci set firewall.@rule[-1].target="ACCEPT"
-uci set firewall.@rule[-1].src="wan"
-uci set firewall.@rule[-1].proto="tcp"
-uci set firewall.@rule[-1].dest_port="6378"
-uci add firewall rule
-uci rename firewall.@rule[-1]="6380"
-uci set firewall.@rule[-1].name="6380"
-uci set firewall.@rule[-1].target="ACCEPT"
-uci set firewall.@rule[-1].src="wan"
-uci set firewall.@rule[-1].proto="tcp"
-uci set firewall.@rule[-1].dest_port="6380"
-uci commit firewall
-#uci set dhcp.lan.ignore='1'                                                 # 关闭DHCP功能
-uci del dhcp.lan.ra
-uci del dhcp.lan.dhcpv6
-uci del dhcp.lan.ra_management 
-uci set dhcp.@dnsmasq[0].filter_aaaa='1'    # 禁止解析 IPv6 DNS记录(若用IPV6请把'1'改'0')
-uci commit dhcp                                                             # 跟‘关闭DHCP功能’联动,同时启用或者删除跟注释
-uci set system.@system[0].hostname='BKY'                            # 修改主机名称为OpenWrt-123
-uci set ttyd.@ttyd[0].command='/bin/login -f root'           # 设置ttyd免帐号登录（去掉uci前面的#生效）
+
 # 如果有用IPV6的话,可以使用以下命令创建IPV6客户端(LAN口)（去掉全部代码uci前面#号生效）
 #uci set network.ipv6=interface
 #uci set network.ipv6.proto='dhcpv6'
@@ -81,10 +34,6 @@ uci set ttyd.@ttyd[0].command='/bin/login -f root'           # 设置ttyd免帐�
 #uci set network.ipv6.reqaddress='try'
 #uci set network.ipv6.reqprefix='auto'
 #uci set firewall.@zone[0].network='lan ipv6'
-uci set amlogic.config.amlogic_firmware_repo='https://github.com/unless/build-actions'
-uci set amlogic.config.amlogic_firmware_tag='armvirt'
-uci set amlogic.config.amlogic_shared_fstype='btrfs'
-uci commit amlogic
 EOF
 
 sed -i 's/PATCHVER:=5.10/PATCHVER:=5.15/g' target/linux/rockchip/Makefile
