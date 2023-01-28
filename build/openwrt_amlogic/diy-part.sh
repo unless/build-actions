@@ -35,9 +35,7 @@ uci set luci.@command[-1].command='sh /mnt/mmcblk0p4/mk.sh'
 #uci set firewall.@zone[0].network='lan ipv6'
 EOF
 
--Wno-error=use-after-free
-
-sed -i 's/-Wno-error=use-after-free//g' package/libs/elfutils/Makefile
+#sed -i 's/-Wno-error=use-after-free//g' package/libs/elfutils/Makefile
 sed -i 's/PATCHVER:=5.10/PATCHVER:=5.15/g' target/linux/rockchip/Makefile
 
 # 把bootstrap替换成argon为源码必选主题（可自行修改您要的,主题名称必须对,比如下面代码的[argon],源码内必须有该主题,要不然编译失败）
