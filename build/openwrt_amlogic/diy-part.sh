@@ -18,6 +18,16 @@ uci set dhcp.@dnsmasq[0].filter_aaaa='1'                      # 禁止解析 IPv
 
 #uci set dhcp.lan.ignore='1'                                  # 旁路由关闭DHCP功能（去掉uci前面的#生效）
 #uci delete network.lan.type                                  # 旁路由去掉桥接模式（去掉uci前面的#生效）
+
+uci set network.wan.proto='static'
+uci set network.wan.ifname='eth1'
+#uci set network.wan.ifname='eth0'
+uci set network.wan.ipaddr='192.168.110.2'
+uci set network.wan.netmask='255.255.255.0'
+uci set network.wan.gateway='192.168.110.1'
+uci set network.wan.dns='192.168.110.1'
+uci set network.globals.packet_steering='1'
+
 uci set system.@system[0].hostname='BKY'                      # 修改主机名称为OpenWrt-123
 uci set ttyd.@ttyd[0].command='/bin/login -f root'            # 设置ttyd免帐号登录（去掉uci前面的#生效）
 
@@ -35,7 +45,6 @@ uci set luci.@command[-1].command='sh /mnt/mmcblk0p4/mk.sh'
 #uci set firewall.@zone[0].network='lan ipv6'
 EOF
 
-#sed -i 's/-Wno-error=use-after-free//g' package/libs/elfutils/Makefile
 sed -i 's/PATCHVER:=5.10/PATCHVER:=5.15/g' target/linux/rockchip/Makefile
 
 # 把bootstrap替换成argon为源码必选主题（可自行修改您要的,主题名称必须对,比如下面代码的[argon],源码内必须有该主题,要不然编译失败）
