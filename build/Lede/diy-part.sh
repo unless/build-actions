@@ -62,7 +62,6 @@ export auto_kernel="true"
 export rootfs_size="960"
 export kernel_repo="https://github.com/ophub/kernel/tree/kernel_stable/pub"
 
-rm -r feeds/danshui/luci-app-gowebdav
 
 svn co https://github.com/unless/luci-app-gowebdav package/luci-app-gowebdav
 
