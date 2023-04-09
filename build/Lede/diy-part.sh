@@ -7,7 +7,7 @@
 # 后台IP设置
 export Ipv4_ipaddr="192.168.111.1"            # 修改openwrt后台地址(填0为关闭)
 export Netmask_netm="255.255.255.0"         # IPv4 子网掩码（默认：255.255.255.0）(填0为不作修改)
-export Op_name="OpenWrt-X86"                # 修改主机名称为OpenWrt-123(填0为不作修改)
+export Op_name="OpenWrt"                # 修改主机名称为OpenWrt-123(填0为不作修改)
 
 # 内核和系统分区大小(不是每个机型都可用)
 export Kernel_partition_size="0"            # 内核分区大小 (填写您想要的数值,数值以MB计算，填0为不作修改),如果你不懂就填0
@@ -62,6 +62,9 @@ export auto_kernel="true"
 export rootfs_size="960"
 export kernel_repo="https://github.com/ophub/kernel/tree/kernel_stable/pub"
 
+rm -r feeds/danshui/luci-app-gowebdav
+
+svn co https://github.com/unless/luci-app-gowebdav package/luci-app-gowebdav
 
 
 # 修改插件名字
