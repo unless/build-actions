@@ -63,7 +63,6 @@ export rootfs_size="960"
 export kernel_repo="https://github.com/ophub/kernel/tree/kernel_stable/pub"
 
 
-git clone https://github.com/unless/luci-app-gowebdav1 package/luci-app-gowebdav
 
 # 修改插件名字
 #sed -i 's/"aMule设置"/"电驴下载"/g' `egrep "aMule设置" -rl ./`
