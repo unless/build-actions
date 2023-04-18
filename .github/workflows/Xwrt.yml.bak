@@ -13,21 +13,23 @@
 #
 #
 
-name: Lienol-源码
+name: Xwrt-源码
 on:
   workflow_dispatch:
     inputs:
       REPO_BRANCH:
-        description: 'Lienol源码-请选择分支'
+        description: 'x-wrt源码-请选择分支'
         required: true
-        default: '19.07'
+        default: 'master'
         type: choice
         options:
-          - '19.07'
-          - '21.02'
-          - '22.03'
           - 'master'
-          - '19.07-test'
+          - '21.10'
+          - '22.03'
+          - 'pr-fix-nand_do_platform_check'
+          - 'master-mt7981'
+          - 'pr-rm-ax6000'
+          - 'pr-wolfssl'
       CONFIG_FILE:
         description: '请选择配置文件'
         required: true
@@ -35,6 +37,7 @@ on:
         type: choice
         options:
           - 'aarch64'
+          - 'p2w_r619ac-128m'
           - 'x86_64'
       CPU_SELECTION:
         description: 'CPU优选,增加编译速度'
@@ -114,9 +117,9 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        target: [Lienol]
+        target: [Xwrt]
         
-        # 请勿对 target: [Lienol] 做任何修改
+        # 请勿对 target: [Xwrt] 做任何修改
         
     steps:
     - name: 密匙检测（密匙为空则退出）
@@ -176,7 +179,7 @@ jobs:
         cd ${GITHUB_WORKSPACE}
         cp -Rf `find ./ -maxdepth 1 -type d ! -path './openwrt' ! -path './'` openwrt
         cd openwrt
-        source ${BUILD_PATH}/common.sh && Diy_menu2
+        source build/${{ env.FOLDER_NAME }}/common.sh && Diy_menu2
  
     - name: 增加插件源
       if: env.REPO_TOKEN
