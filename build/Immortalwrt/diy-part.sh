@@ -3,7 +3,6 @@
 # DIY扩展二合一了，在此处可以增加插件
 # 自行拉取插件之前请SSH连接进入固件配置里面确认过没有你要的插件再单独拉取你需要的插件
 # 不要一下就拉取别人一个插件包N多插件的，多了没用，增加编译错误，自己需要的才好
-rm package/emortal/default-settings/Makefile
 sed -i 's/"+luci-i18n-base-zh_Hans"/""/g' package/emortal/default-settings/Makefile
 cat package/emortal/default-settings/Makefile
 # 后台IP设置
