@@ -1,5 +1,5 @@
 
-[Telegram聊天吹水群](https://t.me/heiheiheio)
+
 
 ---
 
@@ -11,15 +11,9 @@
 
 《[github actions编译教程](https://github.com/danshui-git/shuoming#%E7%BC%96%E8%AF%91%E6%95%99%E7%A8%8B)》
 
-《[amlogic和rockchip固件打包设置教程](https://github.com/danshui-git/shuoming/blob/master/Amlogic.md)》
-
-《[本地Ubuntu一键编译](https://github.com/281677160/bendi)》
-
-《[本地一键提取.config然后在云编译脚本使用](https://github.com/281677160/bendi)》
+《[Amlogic、Rockchip系列固件打包设置教程](https://github.com/danshui-git/shuoming/blob/master/Amlogic.md)》
 
 《[在线更新固件插件说明](https://github.com/danshui-git/shuoming/blob/master/%E5%AE%9A%E6%97%B6%E6%9B%B4%E6%96%B0%E6%8F%92%E4%BB%B6.md)》
-
-《[Telegram中文设置方法](https://github.com/danshui-git/shuoming/blob/master/tele.md)》
 
 <br />
 </details>
@@ -27,10 +21,11 @@
 ---
 
 <details>
-<summary>🆙更新说明（2023年4月15号）</summary>
+<summary>🆙更新说明（2023年4月22号）</summary>
 <br>
 <br />
 <br>
+
 
 1、把autobuild仓库合拼到了这里了，以前拉autobuild仓库的应该都不可以用了，请重新拉取这个仓库吧，以前老的build-actions仓库也要重新拉取新的build-actions仓库使用（请不要继续拉取autobuild仓库使用，这个是我个人使用仓库）
  
@@ -44,17 +39,43 @@
  
 6、luci-app-gost插件有段时间也编译不成功，我找了个比较老的版本，也修改了一下，可以编译成功了，没测试过能不能用，有用这个插件的希望可以反馈一下
  
-7、大雕源码，有些机型编译增加mac80211驱动的时候会编译错误的，如果出现这个情况，自己带上日志找源码作者处理(2023年4月15号)
+7、大雕源码，有些机型编译增加mac80211驱动的时候会编译错误的，如果出现这个情况，自己带上日志找源码作者处理
  
-8、官方源码的【master】、【openwrt-21.02】、【openwrt-22.03】分支都增加了luci-app-passwall、luci-app-ssr-plus和luci-app-OpenClash插件，【openwrt-19.07】分支没有增加luci-app-passwall、luci-app-ssr-plus，因为缺依赖，没搞懂缺啥，有懂增加的说说怎么操作
+8、我编译仓库里，增加大雕源码【gl-ax1800】分支选择，不是他 https://github.com/coolsnowwolf/lede 源码的分支，是他另外一个仓库 https://github.com/coolsnowwolf/openwrt-gl-ax1800 的源码，看他意思是专门给gl-ax1800路由器准备的，我看了下，也测试了一下，其实就是一个4.14内核的源码，有需要这个内核的朋友，也可以使用这个分支编译
  
-9、我编译仓库里，增加大雕源码【gl-ax1800】分支选择，不是他 https://github.com/coolsnowwolf/lede 源码的分支，是他另外一个仓库 https://github.com/coolsnowwolf/openwrt-gl-ax1800 的源码，看他意思是专门给gl-ax1800路由器准备的，我看了下，也测试了一下，其实就是一个4.14内核的源码，有需要这个内核的朋友，也可以使用这个分支编译
+9、更新了amlogic和rockchip固件打包设置教程
  
-10、更新了amlogic和rockchip固件打包设置教程(2023年4月15号)
- 
-11、每次安装固件完毕，都会在安装完毕30秒左右重启一次系统的，请大家发现这个问题的时候莫慌
+10、每次安装固件完毕，都会在安装完毕30秒左右重启一次系统的，请大家发现这个问题的时候莫慌
 
 <br />
+</details>
+
+---
+
+<details>
+<summary>✴️本地编译</summary>
+<br>
+<br />
+<br>
+
+《[本地Ubuntu一键编译OpenWrt固件](https://github.com/281677160/bendi)》
+
+《[本地一键提取.config然后在云编译脚本使用](https://github.com/281677160/bendi)》
+
+<br />
+</details>
+
+---
+
+<details>
+<summary>🏠Telegram群</summary>
+<br>
+<br />
+ 
+《[Telegram聊天吹水群](https://t.me/heiheiheio)》
+
+《[Telegram中文设置方法](https://github.com/danshui-git/shuoming/blob/master/tele.md)》
+
 </details>
 
 ---
