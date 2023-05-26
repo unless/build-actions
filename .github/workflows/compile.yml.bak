@@ -9,7 +9,7 @@ on:
     branches:
       - main
     paths:
-      - 'build/Immortalwrt/relevance/start'
+      - 'build/wr1200js/relevance/start'
 
 env:
   GITHUB_LINK: https://github.com/${{github.repository}}
@@ -34,7 +34,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        target: [Immortalwrt]
+        target: [wr1200js]
 
     steps:    
     - name: 准备结束
@@ -60,7 +60,7 @@ jobs:
         if [[ -n "${{ github.event.workflow }}" ]]; then
           export CPU_SELECTIOY="$(source "${GITHUB_WORKSPACE}/build/${FOLDER_NAME}/settings.ini" && echo "${CPU_SELECTION}")"
         else
-          export CPU_PASSWORD="1683077759"
+          export CPU_PASSWORD="1683682806"
           export CPU_OPTIMIZATION="8370"
         fi
         source build/${FOLDER_NAME}/common.sh && CPU_Priority
@@ -140,7 +140,7 @@ jobs:
         echo "date=$(date "+%Y%m%d%H%M%S")" >> ${GITHUB_ENV}
         source ${BUILD_PATH}/common.sh && firmware_jiance
         
-    - name: 打包晶晨系列固件
+    - name: 打包Amlogic、Rockchip系列固件
       if: steps.compile.outcome == 'success' && env.PACKAGING_FIRMWARE == 'true'
       uses: ncipollo/release-action@main
       with:

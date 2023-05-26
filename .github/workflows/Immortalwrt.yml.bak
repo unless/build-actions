@@ -34,7 +34,6 @@ on:
         type: choice
         options:
           - 'x86_64'
-          - 'p2w_r619ac-128m'
           - 'aarch64'
       CPU_SELECTION:
         description: 'CPU优选,增加编译速度'
@@ -76,7 +75,7 @@ on:
         default: 'true'
         type: boolean
       UPDATE_FIRMWARE_ONLINE:
-        description: '增加在线更新功能/N1和晶晨系列固件打包'
+        description: '增加在线更新功能/打包Amlogic、Rockchip系列固件'
         required: false
         default: 'true'
         type: boolean
